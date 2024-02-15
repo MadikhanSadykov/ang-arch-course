@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { DemoRoutingModule } from './demo-routing.module';
 import { DemoComponent } from './demo.component';
-import { SharedComponent } from './pages/shared/shared.component';
+import {SharedModule} from "@app/pages/demo/pages/shared/shared.module";
+import {StylesModule} from "@app/pages/demo/pages/styles/styles.module";
 
 
 @NgModule({
   declarations: [
-    DemoComponent,
-    SharedComponent
+    DemoComponent
   ],
   imports: [
     CommonModule,
-    DemoRoutingModule
+    DemoRoutingModule,
+    SharedModule,
+    StylesModule
   ]
 })
 export class DemoModule { }

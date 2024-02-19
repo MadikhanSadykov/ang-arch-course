@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {regex, regexErrors} from "@app/shared";
+import {ControlItem} from "@app/models/frontend";
 
 @Component({
   selector: 'app-shared',
@@ -12,9 +13,18 @@ export class SharedComponent implements OnInit {
   form: FormGroup;
   isInline: boolean;
   regexErrors = regexErrors;
+  items: ControlItem[];
 
   constructor(private fb: FormBuilder) {
     this.isInline = true;
+
+    this.items = [
+      { label: 'First', value: 1 },
+      { label: 'Second', value: 2 },
+      { label: 'Third', value: 3 },
+      { label: 'Fourth', value: 4 },
+      { label: 'Fifth', value: 5 }
+    ];
   }
 
   ngOnInit(): void {
@@ -33,6 +43,31 @@ export class SharedComponent implements OnInit {
           Validators.required,
           Validators.minLength(4),
           Validators.pattern(regex.password)
+        ]
+      }],
+      select: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
+        ]
+      }],
+      checkboxes: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
+        ]
+      }],
+      radios: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
+        ]
+      }],
+      date: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
+        ]
+      }],
+      dateRange: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
         ]
       }]
     });
@@ -53,4 +88,5 @@ export class SharedComponent implements OnInit {
     this.isInline = !this.isInline;
   }
 
+  protected readonly Date = Date;
 }

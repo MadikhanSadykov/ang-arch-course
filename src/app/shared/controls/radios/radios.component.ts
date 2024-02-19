@@ -1,25 +1,21 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-
 import {ControlItem, Value} from "@app/models/frontend";
-import {MatSelectChange, MatSelectModule} from "@angular/material/select";
-export {ControlItem, Value} from "@app/models/frontend";
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  selector: 'app-radios',
+  templateUrl: './radios.component.html',
+  styleUrls: ['./radios.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
+      useExisting: forwardRef(() => RadiosComponent),
       multi: true
     }
   ]
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class RadiosComponent implements OnInit, ControlValueAccessor {
   @Input() items: ControlItem[];
-  @Input() placeholder: string;
   @Output() changed = new EventEmitter<Value>();
 
   value: Value;
@@ -29,7 +25,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private propagateChange: any = () => { };
-  private propagateTouched: any = () => { };
 
   ngOnInit(): void {
   }
@@ -39,7 +34,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnTouched(fn: any): void {
-    this.propagateTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -50,14 +44,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.value = value;
   }
 
-  onBlur(): void {
-    this.propagateTouched();
-  }
-
-  onChanged(event: any): void {
-    const value = event.value;
+  onChanged(value: Value): void {
     this.value = value;
     this.propagateChange(value);
     this.changed.emit(value);
   }
+
+  isChecked(value: Value): boolean {
+    return this.value === value;
+  }
+
 }

@@ -20,6 +20,47 @@
     [isInline]="isInline">
     <app-password formControlName="password"></app-password>
   </app-form-field>
+
+  <app-form-field
+    label="Select"
+    [required]="true"
+    [control]="form.controls['select']"
+    [isInline]="isInline">
+    <app-select formControlName="select" [items]="items"></app-select>
+  </app-form-field>
+
+  <app-form-field
+    label="Checkboxes"
+    [required]="true"
+    [control]="form.controls['checkboxes']"
+    [isInline]="isInline">
+    <app-checkboxes formControlName="checkboxes" [items]="items"></app-checkboxes>
+  </app-form-field>
+
+  <app-form-field
+    label="Radios"
+    [required]="true"
+    [control]="form.controls['radios']"
+    [isInline]="isInline">
+    <app-radios formControlName="radios" [items]="items"></app-radios>
+  </app-form-field>
+
+  <app-form-field
+    label="Date"
+    [required]="true"
+    [control]="form.controls['date']"
+    [isInline]="isInline">
+    <app-date formControlName="date" placeholder="Date"></app-date>
+  </app-form-field>
+
+  <app-form-field
+    label="Date Range"
+    [required]="true"
+    [control]="form.controls['dateRange']"
+    [isInline]="isInline">
+    <app-date-range formControlName="dateRange"></app-date-range>
+  </app-form-field>
+
 </form>
 
 <code>

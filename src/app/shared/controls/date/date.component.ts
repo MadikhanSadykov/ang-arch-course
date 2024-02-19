@@ -1,27 +1,27 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 
-import {ControlItem, Value} from "@app/models/frontend";
-import {MatSelectChange, MatSelectModule} from "@angular/material/select";
-export {ControlItem, Value} from "@app/models/frontend";
+type Value = number;
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  selector: 'app-date',
+  templateUrl: './date.component.html',
+  styleUrls: ['./date.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
+      useExisting: forwardRef(() => DateComponent),
       multi: true
     }
   ]
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
-  @Input() items: ControlItem[];
+export class DateComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string;
+  @Input() min: Date;
+  @Input() max: Date;
   @Output() changed = new EventEmitter<Value>();
-
+  @Output() closed = new EventEmitter<void>();
   value: Value;
   isDisabled: boolean;
 
@@ -50,14 +50,22 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.value = value;
   }
 
-  onBlur(): void {
-    this.propagateTouched();
+  onChanged(event: MatDatepickerInputEvent<Date>): void {
+    if (event.value) {
+      const value: Value = event.value.getTime();
+      this.value = value;
+      this.propagateChange(value);
+      this.changed.emit(value);
+    }
   }
 
-  onChanged(event: any): void {
-    const value = event.value;
-    this.value = value;
-    this.propagateChange(value);
-    this.changed.emit(value);
+  onClosed(): void {
+    this.propagateTouched();
+    this.closed.emit();
   }
+
+  get inputValue(): Date {
+    return new Date(this.value) ;
+  }
+
 }

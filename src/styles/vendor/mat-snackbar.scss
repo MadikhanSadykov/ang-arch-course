@@ -1,0 +1,11 @@
+::ng-deep .mat-snackbar {
+  &_error {
+    background-color: $error;
+    color: $on-error;
+  }
+
+  &_success {
+    background-colors: $success;
+    color: $on-success;
+  }
+}
